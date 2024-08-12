@@ -1,7 +1,9 @@
-.container{
-  background-color: rgb(178, 178, 234);
-  height: 100px;
-  width: 100px;
-  align-items: center;
-  left: 100px;
+
+body{
+  background-color: rgb(193, 218, 238);
+}
+.card{
+ 
+  width: 200px;
+  color: #000;
 }
