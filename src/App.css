@@ -1,9 +1,105 @@
-
-body{
+body {
   background-color: rgb(193, 218, 238);
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
-.card{
- 
-  width: 200px;
-  color: #000;
+
+.container {
+  padding: 40px;
+}
+
+.header-content {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.header-content h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px; /* Added to control spacing between elements */
+}
+
+.add-widget-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.options-menu {
+  position: relative;
+}
+
+.menu-button {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+
+.dashboard-section {
+  margin-bottom: 40px;
+}
+
+.dashboard-heading {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card, .card1 {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 150px;
+  transition: transform 0.3s ease;
+  text-align: left;
+}
+
+.card img {
+  height: 100px;
+  width: 100px;
+}
+
+.card1 {
+  align-items: center;
+  justify-content: center;
+}
+
+.card:hover, .card1:hover {
+  transform: translateY(-10px);
 }
