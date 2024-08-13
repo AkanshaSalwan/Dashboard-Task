@@ -4,6 +4,17 @@ body {
   font-family: Arial, sans-serif;
 }
 
+.btn{
+ background: transparent !important;
+  color: rgb(0, 0, 0) !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px !important;
+  cursor: pointer;
+  font-size: 15px !important;
+  border: 1px solid #ccc;
+}
+
 .container {
   padding: 40px;
 }
@@ -61,7 +72,7 @@ body {
 }
 
 .dashboard-section {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .dashboard-heading {
@@ -98,8 +109,159 @@ body {
 .card1 {
   align-items: center;
   justify-content: center;
+  background: white !important;
 }
 
 .card:hover, .card1:hover {
   transform: translateY(-10px);
+}
+
+.container {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgb(212, 227, 239);
+  border-bottom: 1px solid #e0e0e0;
+  bottom: 34px;
+  position: relative;
+  width: 98%;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  color: #888;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-bar input {
+  padding: 8px 8px 8px 32px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 500px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  color: #888;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+}
+
+.header-icons .icon {
+  margin-left: 20px;
+  color: #888;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end; /* Align the toolbar to the right */
+  padding: 10px 20px;
+ 
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-select {
+  margin-right: 20px;
+}
+
+.add-widget-button {
+  margin-right: 20px;
+  background: white !important;
+  color: #333;
+  font-weight: bold !important;
+}
+
+.options-menu .menu-button {
+  font-size: 20px;
+}
+
+/* Additional styling for dashboard sections and cards */
+.dashboard-section {
+  margin: 20px;
+}
+
+.dashboard-heading {
+  margin-bottom: 15px;
+}
+
+.cards-container {
+  display: flex;
+  gap: 20px;
+}
+
+.card, .card1 {
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  width: 30%;
+  text-align: center;
+}
+
+.card1 {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.css-1160xiw-MuiPaper-root-MuiDrawer-paper{
+  width: 540px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.drawheader h2{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #007bff !important;
+  padding: 10px 5px;
+}
+
+.drawer-footer {
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end; 
+  position: absolute;
+  bottom: 40px !important;
+  left: -16px;
+  width: 100%;
+  background-color: #f9f9f9; 
+}
+
+.drawer-footer .MuiButton-root {
+  margin-right: 8px; 
+}
+
+.css-13xfq8m-MuiTabPanel-root{
+  padding: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
 }
