@@ -260,91 +260,82 @@ function App() {
         </div>
       </div>
 
-      {/* Drawer Section for Adding Widgets */}
+      {/* Drawer Section */}
       <Drawer anchor="right" open={isSliderOpen} onClose={toggleSlider(false)}>
         <div className="drawer-content">
-          <h2>View Widget</h2>
+          <h3>+ Add Widget</h3>
+          <h4>Personalize Your DashBoard by Adding the Following widget</h4>
+          <div className="search-bar">
+            <FaSearch className="search-icon" />
+            <input
+              type="text"
+              placeholder="Search widget..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <TabList onChange={handleChange} aria-label="Widget Categories">
-                <Tab label="CSPM Executive Dashboard" value="1" />
-                <Tab label="CWPP Dashboard" value="2" />
+              <TabList onChange={handleChange} aria-label="Widget categories">
+                <Tab label="CSPM" value="1" />
+                <Tab label="CWPP" value="2" />
                 <Tab label="Registry Scan" value="3" />
               </TabList>
             </Box>
             <TabPanel value="1">
-              <div className="search-container">
-                <TextField
-                  id="search-widget"
-                  label="Search Widgets"
-                  variant="outlined"
-                  fullWidth
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
               {filteredWidgets('1')?.map((widget, index) => (
                 <FormControlLabel
                   key={index}
                   control={
                     <Checkbox
-                      checked={dashboardWidgets['1'].some(w => w.name === widget.name)}
+                      checked={dashboardWidgets['1']?.some(w => w.name === widget.name)}
                       onChange={handleCheckboxChange(widget, '1')}
                     />
                   }
-                  label={`${widget.name} - ${widget.text}`}
+                  label={widget.name}
                 />
               ))}
             </TabPanel>
             <TabPanel value="2">
-              <div className="search-container">
-                <TextField
-                  id="search-widget"
-                  label="Search Widgets"
-                  variant="outlined"
-                  fullWidth
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
               {filteredWidgets('2')?.map((widget, index) => (
                 <FormControlLabel
                   key={index}
                   control={
                     <Checkbox
-                      checked={dashboardWidgets['2'].some(w => w.name === widget.name)}
+                      checked={dashboardWidgets['2']?.some(w => w.name === widget.name)}
                       onChange={handleCheckboxChange(widget, '2')}
                     />
                   }
-                  label={`${widget.name} - ${widget.text}`}
+                  label={widget.name}
                 />
               ))}
             </TabPanel>
             <TabPanel value="3">
-              <div className="search-container">
-                <TextField
-                  id="search-widget"
-                  label="Search Widgets"
-                  variant="outlined"
-                  fullWidth
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
               {filteredWidgets('3')?.map((widget, index) => (
                 <FormControlLabel
                   key={index}
                   control={
                     <Checkbox
-                      checked={dashboardWidgets['3'].some(w => w.name === widget.name)}
+                      checked={dashboardWidgets['3']?.some(w => w.name === widget.name)}
                       onChange={handleCheckboxChange(widget, '3')}
                     />
                   }
-                  label={`${widget.name} - ${widget.text}`}
+                  label={widget.name}
                 />
               ))}
             </TabPanel>
           </TabContext>
+        </div>
+
+        {/* Buttons at the Bottom of the Drawer */}
+        <div className="drawer-footer">
+          <Button variant="contained" color="primary" onClick={toggleSlider(false)} style={{ marginRight: 8 }}>
+            Confirm
+          </Button>
+          <Button variant="outlined" color="secondary" onClick={toggleSlider(false)}>
+            Cancel
+          </Button>
         </div>
       </Drawer>
     </div>
