@@ -1,54 +1,134 @@
 import React, { useState } from "react";
 import "./App.css";
-import Cloud from "../src/images/cloud.png";
-import Google from "../src/images/google.png";
-import { FaSearch, FaBell, FaUser } from "react-icons/fa";
-import { Drawer, List, ListItem, Checkbox, ListItemText, Button } from "@mui/material";
+import { FaSearch, FaBell, FaUser, FaTrash } from "react-icons/fa";
+import { Drawer, Button, Checkbox, FormControlLabel } from "@mui/material";
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-
-import FormControlLabel from '@mui/material/FormControlLabel';
-
-
-
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function App() {
   const [isSliderOpen, setIsSliderOpen] = useState(false);
-  const [selectedWidgets, setSelectedWidgets] = useState([]);
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = useState('1'); // Default to the first tab
+  const [widgetName, setWidgetName] = useState('');
+  const [widgetText, setWidgetText] = useState('');
+  const [dashboardWidgets, setDashboardWidgets] = useState({
+    '1': [],
+    '2': [],
+    '3': [],
+  });
+
+  const [availableWidgets, setAvailableWidgets] = useState({
+    '1': [{ name: 'Widget 1', text: 'Description for Widget 1' }],
+    '2': [{ name: 'Widget 2', text: 'Description for Widget 2' }],
+    '3': [{ name: 'Widget 3', text: 'Description for Widget 3' }],
+  });
+
+  const [searchTerm, setSearchTerm] = useState(''); // State to store search term
+  const [mainSearchTerm, setMainSearchTerm] = useState(''); // State to store main dashboard search term
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const toggleSlider = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  const toggleSlider = (open) => () => {
     setIsSliderOpen(open);
   };
 
-  const handleToggle = (value) => () => {
-    const currentIndex = selectedWidgets.indexOf(value);
-    const newChecked = [...selectedWidgets];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setSelectedWidgets(newChecked);
+  const handleClickOpen = (category) => () => {
+    setValue(category); // Set the value to the selected category
+    setOpen(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
+  const handleAddWidget = () => {
+    if (widgetName.trim() === '' || widgetText.trim() === '') {
+      return; // Optionally show an error or validation message
+    }
 
-  const widgets = ["Widget 1", "Widget 2", "Widget 3"]; // Example widget options
+    setAvailableWidgets(prevState => {
+      const updatedWidgets = { ...prevState };
+      if (!updatedWidgets[value]) {
+        updatedWidgets[value] = [];
+      }
+      if (!updatedWidgets[value].find(w => w.name === widgetName)) {
+        updatedWidgets[value].push({ name: widgetName, text: widgetText });
+      }
+      return updatedWidgets;
+    });
+
+    setDashboardWidgets(prevState => {
+      const updatedWidgets = { ...prevState };
+      if (!updatedWidgets[value]) {
+        updatedWidgets[value] = [];
+      }
+      if (!updatedWidgets[value].find(w => w.name === widgetName)) {
+        updatedWidgets[value].push({ name: widgetName, text: widgetText });
+      }
+      return updatedWidgets;
+    });
+
+    setWidgetName('');
+    setWidgetText('');
+    handleClose();
+  };
+
+  const handleRemoveWidget = (category, index) => {
+    setDashboardWidgets(prevState => {
+      const updatedWidgets = prevState[category].filter((_, i) => i !== index);
+      return { ...prevState, [category]: updatedWidgets };
+    });
+  };
+
+  const handleCheckboxChange = (widget, category) => (event) => {
+    const checked = event.target.checked;
+    if (checked) {
+      setDashboardWidgets(prevState => {
+        const updatedWidgets = { ...prevState };
+        if (!updatedWidgets[category]) {
+          updatedWidgets[category] = [];
+        }
+        if (!updatedWidgets[category].find(w => w.name === widget.name)) {
+          updatedWidgets[category].push(widget);
+        }
+        return updatedWidgets;
+      });
+    } else {
+      setDashboardWidgets(prevState => {
+        const updatedWidgets = { ...prevState };
+        if (updatedWidgets[category]) {
+          const widgetIndex = updatedWidgets[category].findIndex(w => w.name === widget.name);
+          if (widgetIndex > -1) {
+            updatedWidgets[category].splice(widgetIndex, 1);
+          }
+        }
+        return updatedWidgets;
+      });
+    }
+  };
+
+  const filteredWidgets = (category) => {
+    return availableWidgets[category]?.filter(widget =>
+      widget.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  const filteredDashboardWidgets = (category) => {
+    return dashboardWidgets[category]?.filter(widget =>
+      widget.name.toLowerCase().includes(mainSearchTerm.toLowerCase())
+    );
+  };
+
+  const [open, setOpen] = React.useState(false);
 
   return (
     <div className="container">
@@ -59,7 +139,12 @@ function App() {
         </div>
         <div className="search-bar">
           <FaSearch className="search-icon" />
-          <input type="text" placeholder="Search anything..." />
+          <input
+            type="text"
+            placeholder="Search anything..."
+            value={mainSearchTerm}
+            onChange={(e) => setMainSearchTerm(e.target.value)}
+          />
         </div>
         <div className="header-icons">
           <FaBell className="icon" />
@@ -90,41 +175,69 @@ function App() {
       <div className="dashboard-section">
         <h2 className="dashboard-heading">CSPM Executive Dashboard</h2>
         <div className="cards-container">
-          <div className="card">
-            <img src={Cloud} alt="Cloud" />
-            <div className="card-text">
-              <h3>Cloud Accounts</h3>
-              <p>Manage your cloud accounts efficiently.</p>
+          {filteredDashboardWidgets('1')?.map((widget, index) => (
+            <div className="card" key={index}>
+              <div className="card-text">
+                <h3>{widget.name}</h3>
+                <p>{widget.text}</p>
+              </div>
+              <FaTrash className="remove-icon" onClick={() => handleRemoveWidget('1', index)} />
             </div>
+          ))}
+          <div className="card1">
+            <button className="btn" onClick={handleClickOpen('1')}>+ Add Widget</button>
           </div>
-          <div className="card">
-            <img src={Google} alt="Google" />
-            <div className="card-text">
-              <h3>Cloud Account Risk Assessment</h3>
-              <p>Evaluate risks in your cloud environment.</p>
-            </div>
-          </div>
-          <div className="card1"><button className="btn">+  Add Widget</button></div>
         </div>
       </div>
+
+      {/* Dialog for Adding Widgets */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add New Widget</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="widget-name"
+            label="Widget Name"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={widgetName}
+            onChange={(e) => setWidgetName(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="widget-text"
+            label="Widget Text"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={widgetText}
+            onChange={(e) => setWidgetText(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleAddWidget}>Add</Button>
+        </DialogActions>
+      </Dialog>
 
       {/* CWPP Dashboard Section */}
       <div className="dashboard-section">
         <h2 className="dashboard-heading">CWPP Dashboard</h2>
         <div className="cards-container">
-          <div className="card">
-            <div className="card-text">
-              <h3>Top 5 Namespace Specific Alerts</h3>
-              <p>Monitor specific alerts in your namespaces.</p>
+          {filteredDashboardWidgets('2')?.map((widget, index) => (
+            <div className="card" key={index}>
+              <div className="card-text">
+                <h3>{widget.name}</h3>
+                <p>{widget.text}</p>
+              </div>
+              <FaTrash className="remove-icon" onClick={() => handleRemoveWidget('2', index)} />
             </div>
+          ))}
+          <div className="card1">
+            <button className="btn" onClick={handleClickOpen('2')}>+ Add Widget</button>
           </div>
-          <div className="card">
-            <div className="card-text">
-              <h3>Workload Alerts</h3>
-              <p>Stay updated with workload-related alerts.</p>
-            </div>
-          </div>
-          <div className="card1"><button className="btn">+  Add Widget</button></div>
         </div>
       </div>
 
@@ -132,72 +245,106 @@ function App() {
       <div className="dashboard-section">
         <h2 className="dashboard-heading">Registry Scan</h2>
         <div className="cards-container">
-          <div className="card">
-            <div className="card-text">
-              <h3>Image Risk Assessment</h3>
-              <p>Assess risks associated with your images.</p>
+          {filteredDashboardWidgets('3')?.map((widget, index) => (
+            <div className="card" key={index}>
+              <div className="card-text">
+                <h3>{widget.name}</h3>
+                <p>{widget.text}</p>
+              </div>
+              <FaTrash className="remove-icon" onClick={() => handleRemoveWidget('3', index)} />
             </div>
+          ))}
+          <div className="card1">
+            <button className="btn" onClick={handleClickOpen('3')}>+ Add Widget</button>
           </div>
-          <div className="card">
-            <div className="card-text">
-              <h3>Image Security Issues</h3>
-              <p>Identify and resolve security issues in images.</p>
-            </div>
-          </div>
-          <div className="card1"><button className="btn">+  Add Widget</button></div>
         </div>
       </div>
 
-      {/* Material UI Drawer for the Widget Slider */}
+      {/* Drawer Section for Adding Widgets */}
       <Drawer anchor="right" open={isSliderOpen} onClose={toggleSlider(false)}>
-        <div className="drawer-header">
-          <h2>Add Widget</h2>
-        </div>
-        <Box sx={{ width: '100%', typography: 'body1' }}>
+        <div className="drawer-content">
+          <h2>View Widget</h2>
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <TabList onChange={handleChange} aria-label="lab API tabs example">
-                <Tab label="CSPM" value="1" />
-                <Tab label="CWPP" value="2" />
+              <TabList onChange={handleChange} aria-label="Widget Categories">
+                <Tab label="CSPM Executive Dashboard" value="1" />
+                <Tab label="CWPP Dashboard" value="2" />
                 <Tab label="Registry Scan" value="3" />
               </TabList>
             </Box>
             <TabPanel value="1">
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 1" />
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 2 " />
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 3 " />
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 4 " />
-
-
+              <div className="search-container">
+                <TextField
+                  id="search-widget"
+                  label="Search Widgets"
+                  variant="outlined"
+                  fullWidth
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              {filteredWidgets('1')?.map((widget, index) => (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={dashboardWidgets['1'].some(w => w.name === widget.name)}
+                      onChange={handleCheckboxChange(widget, '1')}
+                    />
+                  }
+                  label={`${widget.name} - ${widget.text}`}
+                />
+              ))}
             </TabPanel>
             <TabPanel value="2">
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 1" />
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 2 " />
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 3 " />
-              
-
-
+              <div className="search-container">
+                <TextField
+                  id="search-widget"
+                  label="Search Widgets"
+                  variant="outlined"
+                  fullWidth
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              {filteredWidgets('2')?.map((widget, index) => (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={dashboardWidgets['2'].some(w => w.name === widget.name)}
+                      onChange={handleCheckboxChange(widget, '2')}
+                    />
+                  }
+                  label={`${widget.name} - ${widget.text}`}
+                />
+              ))}
             </TabPanel>
-
             <TabPanel value="3">
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 1" />
-              <FormControlLabel control={<Checkbox defaultChecked />} label="Widget 2 " />
-             
-
-
+              <div className="search-container">
+                <TextField
+                  id="search-widget"
+                  label="Search Widgets"
+                  variant="outlined"
+                  fullWidth
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              {filteredWidgets('3')?.map((widget, index) => (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={dashboardWidgets['3'].some(w => w.name === widget.name)}
+                      onChange={handleCheckboxChange(widget, '3')}
+                    />
+                  }
+                  label={`${widget.name} - ${widget.text}`}
+                />
+              ))}
             </TabPanel>
-
-
           </TabContext>
-        </Box>
-        <div className="drawer-footer">
-          <Button variant="outlined" color="secondary" onClick={toggleSlider(false)}>
-            Cancel
-          </Button>
-          <Button variant="contained" color="primary" onClick={toggleSlider(false)}>
-            Confirm
-          </Button>
-
         </div>
       </Drawer>
     </div>
