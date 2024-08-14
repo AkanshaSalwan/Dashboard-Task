@@ -4,6 +4,17 @@ body {
   font-family: Arial, sans-serif;
 }
 
+.btn {
+  background: transparent !important;
+  color: rgb(0, 0, 0) !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px !important;
+  cursor: pointer;
+  font-size: 15px !important;
+  border: 1px solid #ccc;
+}
+
 .container {
   padding: 40px;
 }
@@ -25,7 +36,7 @@ body {
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 20px;
-  gap: 10px; /* Added to control spacing between elements */
+  gap: 10px; 
 }
 
 .add-widget-button {
@@ -61,7 +72,7 @@ body {
 }
 
 .dashboard-section {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .dashboard-heading {
@@ -73,8 +84,9 @@ body {
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
+  justify-content: center;
 }
 
 .card, .card1 {
@@ -88,6 +100,7 @@ body {
   min-height: 150px;
   transition: transform 0.3s ease;
   text-align: left;
+  position: relative;
 }
 
 .card img {
@@ -98,8 +111,337 @@ body {
 .card1 {
   align-items: center;
   justify-content: center;
+  background: white !important;
 }
 
 .card:hover, .card1:hover {
   transform: translateY(-10px);
+}
+
+.container {
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgb(212, 227, 239);
+  border-bottom: 1px solid #e0e0e0;
+  bottom: 34px;
+  position: relative;
+  width: 98%;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  color: #888;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-bar input {
+  padding: 8px 8px 8px 32px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 500px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  color: #888;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+}
+
+.header-icons .icon {
+  margin-left: 20px;
+  color: #888;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end; 
+  padding: 10px 20px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-select {
+  margin-right: 20px;
+}
+
+.add-widget-button {
+  margin-right: 20px;
+  background: white !important;
+  color: #333;
+  font-weight: bold !important;
+}
+
+.options-menu .menu-button {
+  font-size: 20px;
+}
+
+
+.dashboard-section {
+  margin: 20px;
+}
+
+.dashboard-heading {
+  margin-bottom: 15px;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.card, .card1 {
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.card1 {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+  width: 540px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.drawheader h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #007bff !important;
+  padding: 10px 5px;
+}
+
+.drawer-footer {
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end; 
+  position: absolute;
+  bottom: 40px !important;
+  left: -16px;
+  width: 100%;
+  background-color: #f9f9f9; 
+}
+
+.drawer-footer .MuiButton-root {
+  margin-right: 8px; 
+}
+
+.css-13xfq8m-MuiTabPanel-root {
+  padding: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+svg {
+  stroke: currentcolor;
+  fill: currentcolor;
+  stroke-width: 0;
+  height: 1em;
+  width: 1em;
+  position: relative;
+  top: auto;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  gap: 20px; 
+  justify-content: center; 
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 150px;
+  position: relative;
+  transition: transform 0.3s ease;
+  text-align: left;
+  flex-wrap: wrap;
+}
+
+.remove-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #ff4d4d;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.remove-icon:hover {
+  color: #cc0000;
+}
+
+.card-content {
+  margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .cards-container {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+@media (max-width: 900px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr); 
+    
+  }
+
+ 
+
+  .search-bar input {
+    width: 100%; 
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-container {
+    grid-template-columns: 1fr; 
+  }
+
+  .header-content h1 {
+    font-size: 20px; 
+  }
+
+  .search-bar input {
+    width: 100%; 
+    font-size: 12px; 
+  }
+
+  .header-icons .icon {
+    font-size: 16px; 
+  }
+
+  .toolbar, .drawer-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    left: 216px;
+    
+  }
+
+  .toolbar-right {
+    flex-direction: column;
+  }
+}
+
+/* Base styling for the dialog box */
+.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+  width: 540px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 12px;
+  /* Add transition for smooth resizing */
+  transition: width 0.3s ease;
+}
+
+
+.drawheader h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #007bff !important;
+  padding: 10px 5px;
+  font-size: 100px !important; 
+}
+
+
+.drawer-footer {
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end; 
+  position: absolute;
+  bottom: 40px !important;
+  left: -50px;
+  width: calc(100% + 32px); 
+  background-color: #f9f9f9; 
+}
+
+
+@media (max-width: 900px) {
+  .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+    width: 80% !important; 
+  }
+
+  .drawheader h2 {
+    font-size: 18px; 
+    padding: 8px 5px; 
+  }
+
+  
+}
+
+@media (max-width: 600px) {
+  .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+    width: 100% !important;
+    padding: 10px; 
+    font-size: 14px;
+  }
+
+  .drawheader h2 {
+    font-size: 16px;
+    padding: 6px 4px; 
+    left: 12px !important;
+  }
+
+  .drawer-footer {
+    padding: 10px; 
+    width: 100%; 
+    left: 0; 
+  
+    position:absolute;
+    left: 100px;
+  }
+
+  .drawer-footer button{
+    margin-left: 18px;
+    padding: 8px 16px; 
+    font-size: 14px; 
+    border-radius: 4px; 
+   
+    left: 130px;
+    gap: 12px;
+    
+  }
 }
